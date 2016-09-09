@@ -8,10 +8,11 @@ import time
 import os
 import sys
 
-# 专辑地址，以 m.ximalaya.com 开头
-albumurl = 'http://m.ximalaya.com/7712455/album/3408225'
-#albumurl = 'http://m.ximalaya.com/25256063/album/2910554'
-# albumurl = 'http://m.ximalaya.com/album/more_tracks?url=%2Falbum%2Fmore_tracks&aid=2910554&page=9'
+# 修改 albumurl 
+# 专辑地址，替换 www为 m.ximalaya.com
+
+albumurl = 'http://www.ximalaya.com/40776845/album/3549018'
+albumurl = albumurl.replace('www','m')
 
 # 取得专辑id
 tmppos = albumurl.index('album/')
@@ -30,12 +31,14 @@ xcount = xcount.replace(')\']', '')
 
 # 获得分页数量，整除20
 xpages = int(xcount)//20 + 1
-print ('The album has ' + str(xpages) + ' pages')
-print ('--------------------------------------------')
+#print ('The album has ' + str(xpages) + ' pages')
 
 # 生成url地址
 strprifx = 'http://m.ximalaya.com/album/more_tracks?url=%2Falbum%2Fmore_tracks&aid='
 strprifx = strprifx + xalbumid +'&page='
+
+# 为文件名统一命名，如01、02、03 ……
+k = 1
 
 for i in range (1, xpages+1):
   pageurl = strprifx + str(i)
@@ -48,17 +51,21 @@ for i in range (1, xpages+1):
   arrxname = []
   for i in xname:
       #print (i.string)
+      # 写入临时数组
       arrxname.append(i.string)
+
   j = 0
 
   for i in xlink:
     #实际下载地址
     #print (i['sound_url'])
     #音频文件名称
-    #print (arrxname[j])
+    xfilename = str('%.3d' % k) + arrxname[j]
+    print (xfilename)
 
-    #print (i['sound_url'])
-    cmd = 'wget -O ' + arrxname[j] + ' ' + i['sound_url']
-    print (cmd)
+    # Wget 命令，重命名文件
+    cmd = 'wget -O ' + '\'' + xfilename + '\'' + ' ' + i['sound_url']
+    #print (cmd)
     os.system(cmd)
     j = j+1
+    k = k+1
