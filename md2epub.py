@@ -9,48 +9,27 @@
 # 2. 封面图片文件：cover.jpg
 # 3. 编辑下面的书籍信息
 ################################################################
+
 import re
 import os
-import datetime
+import sys
 
-# 电子书路径
-
-FILENAME = '1.txt'
+# 先用 txt2md.py 整理txt文件
+#FILENAME = sys.argv[1]
+FILENAME = '1.txt.md'
 
 # 以下为电子书基本信息，需编辑！
-
-BOOKTITLE = '俗丽之夜' #书名
+BOOKTITLE = '野丫头凯蒂' #书名
 BOOKSUBTITLE = '' #副标题
-BOOKAUTHOR = '多萝西·L.塞耶斯' #作者
-BOOKISBN = '9787513303880' #ISBN，13位
-BOOKDOUBAN = '6833941' # 豆瓣id，配合calibre插件
-BOOKPUB = '新星出版社 ' #出版社
+BOOKAUTHOR = '卡罗尔·拉瑞·布林克' #作者
+BOOKISBN = '9787534266034' #ISBN，13位
+BOOKDOUBAN = '6560634' # 豆瓣id，配合calibre插件
+BOOKPUB = '浙江少年儿童出版社' #出版社
 BOOKCOVER = 'cover.jpg' #封面图片
-
-
-# 函数：整理text文件，生成书名.md文件
-def cleantxt(txtfile):
-    f = open(txtfile, 'r') #读utf8文件
-    mdfile = open(BOOKTITLE+'.md', 'wb') #建立md文件
-
-    for line in f.readlines():
-        line = line.replace('　', '') # 删除空格
-        line = line.replace(' ', '')
-        if len(line) != 0:
-            line = line.strip() #清除段落前后的空白，包括多个空行    
-            if re.match(r'序章|第.+章|尾声|后记', line):#匹配章节并修改
-                line = '# ' + line
-                print(line)
-
-            mdfile.write(line.encode('utf-8'))#写入时需要转换成utf-8
-            mdfile.write('\n\n'.encode('utf-8'))# 在段落后写入空行
-    f.close()
-    mdfile.close()
 
 # 函数：生成metadata信息
 def make_metafile():
     m_file = open('metadata.txt',  'w')
-
     m_file.write('---\n')
     m_file.write('title:\n')
     m_file.write('- type: main\n')
@@ -73,16 +52,14 @@ def make_metafile():
     m_file.write('\n...')
     m_file.close()
 
-cleantxt(FILENAME) # 整理txt文件
 make_metafile() # 建立metadata.txt
 
-
-
 #调用pandoc制作epub，toc指定在h1，设置title（否则报错），md转换读入metadata.txt
-cmd = 'pandoc --toc-depth=2  -o ' + BOOKTITLE + '.epub metadata.txt ' + BOOKTITLE + '.md --metadata title=' + BOOKTITLE + ''
+# 指定了epub.css，中文缩进两个字
+cmd = 'pandoc --toc-depth=1  -o ' + BOOKTITLE + '.epub metadata.txt ' + FILENAME + ' --metadata title=' + BOOKTITLE + ' -c epub.css'
 os.system(cmd)
+
 os.system('rm -rf metadata.txt') #删除metadata文件
-os.system('rm -rf ' +  BOOKTITLE + '.md') #删除临时md文件
 print( BOOKTITLE +'.epub cteated!')
 
 # 转换一份mobi
