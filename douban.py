@@ -1,20 +1,15 @@
 ##coding=utf-8
-# 抓取豆瓣已读书数量
-# 20180907 增加柱状图显示
+# 20181203 豆瓣阅读数量柱状图显示
 
 import urllib.request
 import json
 
 USERNAME = 'metaldudu'
 YEAR = '2018'
-# 用户名和年份
 
 readlist = []
-
-#html = 'https://api.douban.com/v2/book/user/' + USERNAME + '/collections?status=read&from=2017-03-01T00:00:00+08:00&to=2017-04-01T00:00:00+08:00'
-# 标准地址
-
 print ('------------------------------------')
+
 m = 1
 while m <= 12:
 	try:
@@ -29,12 +24,11 @@ while m <= 12:
 			thismonth = YEAR + '-12-01'
 			nextmonth = str(int(YEAR)+1) + '-01-01'
 
-		html = 'https://api.douban.com/v2/book/user/' + USERNAME + '/collections?status=read&from=' + thismonth + 'T00:00:00+08:00&to=' + nextmonth + 'T00:00:00+08:00'
 		# 构造api地址
+		html = 'https://api.douban.com/v2/book/user/' + USERNAME + '/collections?status=read&from=' + thismonth + 'T00:00:00+08:00&to=' + nextmonth + 'T00:00:00+08:00'
 
 		hjson = json.loads(urllib.request.urlopen(html.format()).read())
 		readlist.append(hjson['total'])
-		#print (thismonth[:-3] + ':' + str(hjson['total']))
 	except Exception as e:
 		print (e)
 	m = m+1
@@ -64,4 +58,4 @@ for i in range(0,maxread+1):
 for i in range(1,13):
   print(' ' + str('%.2d' % (i)), end='')
 print('\n' + '------------------------------------')
-print(YEAR + ' total read : ' + str(sum(readlist)))
+print(USERNAME +' in ' + YEAR + ' total: ' +str(sum(readlist)) )

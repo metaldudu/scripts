@@ -19,12 +19,12 @@ import sys
 FILENAME = '1.txt.md'
 
 # 以下为电子书基本信息，需编辑！
-BOOKTITLE = '野丫头凯蒂' #书名
+BOOKTITLE = '会飞的教室' #书名
 BOOKSUBTITLE = '' #副标题
-BOOKAUTHOR = '卡罗尔·拉瑞·布林克' #作者
-BOOKISBN = '9787534266034' #ISBN，13位
-BOOKDOUBAN = '6560634' # 豆瓣id，配合calibre插件
-BOOKPUB = '浙江少年儿童出版社' #出版社
+BOOKAUTHOR = '艾利克·卡斯特纳' #作者
+BOOKISBN = '9787200029727' #ISBN，13位
+BOOKDOUBAN = '1022272' # 豆瓣id，配合calibre插件
+BOOKPUB = '北京出版社' #出版社
 BOOKCOVER = 'cover.jpg' #封面图片
 
 # 函数：生成metadata信息
@@ -56,7 +56,7 @@ make_metafile() # 建立metadata.txt
 
 #调用pandoc制作epub，toc指定在h1，设置title（否则报错），md转换读入metadata.txt
 # 指定了epub.css，中文缩进两个字
-cmd = 'pandoc --toc-depth=1  -o ' + BOOKTITLE + '.epub metadata.txt ' + FILENAME + ' --metadata title=' + BOOKTITLE + ' -c epub.css'
+cmd = 'pandoc --toc-depth=2 -o ' + BOOKTITLE + '.epub metadata.txt ' + FILENAME + ' --metadata title=' + BOOKTITLE + ' -c epub.css'
 os.system(cmd)
 
 os.system('rm -rf metadata.txt') #删除metadata文件

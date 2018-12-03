@@ -43,13 +43,13 @@ def addtoc(textfile):
     for line in f.readlines():
         line = line.strip()
         if len(line) != 0:           
-            match1 = r'序章|第.+章|第.+乐章|尾声|后记|终章|[一二三四五六七八九十]、' # 各种奇葩分节方式
+            match1 = r'序章|第.+章|第.+话|第.+乐章|尾声|后记|终章|[一二三四五六七八九十]、' # 各种奇葩分节方式
             match2 = r'[１２３４５６７８９０]+' #全角数字
             match4 = r'\d' #半角数字，一般为小节
             match5 = r'.+～' # 章节中含有某个字符
             match6 = r'.+月.+日' # 小节名称含有月和日
 
-            if re.match(match1, line) and len(line) < 20:# 章节名不可能太长
+            if re.match(match1, line) and len(line) < 10:# 章节名不可能太长
                 line = '# ' + line # 改为h1          
             if (re.match(match2, line)) and len(line) < 28:# 匹配可能的小节
                 line = '## ' + line # 改为h2
@@ -84,9 +84,34 @@ def addblank(txtfile):
     fnew.close()
     print('已在标题中添加空格')
 
+# 函数04：修正pdf粘贴后的回车，正确分段。思路：先给不足长度的行分段，然后替换掉换行符
+
+def fixblock(txtfile):
+    f = open(txtfile, 'r')#读utf8文件
+    tmplist = [] #建立临时list
+
+    for line in f.readlines():
+        line = line.strip() #清除头尾的空格
+        #print(len(line))
+        if len(line) < 23:
+            tmplist.append(line+ '\n\n') # 在小于行宽的行后面分段
+        else:
+            tmplist.append(line.replace('\n', ''))
+    
+    f.close()
+    fnew = open(txtfile, 'w')
+    for i in tmplist: #回写到文件
+        fnew.write(i)
+    fnew.close()
+    print('已在尝试分段')
+
+
+
+
 ######################################
 print('-------------------------------')
 print('1. 清除缩进的空格  2. 按章节分割文件 3. 章节部分添加空格')
+print('4. 智能分段')
 print('-------------------------------')
 keyinput = input('输入需要的操作： ')
 
@@ -97,7 +122,8 @@ elif keyinput == '2':
     addtoc(md_file)
 elif keyinput == '3':
     addblank(md_file)
-
+elif keyinput == '4':
+    fixblock(md_file)
 
 ######################################
 

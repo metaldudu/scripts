@@ -14,6 +14,4 @@
 - qdaily-15.py 爬取好奇心日报
 - qdaily-56.py 爬取好奇心日报
 
----
-
-changelog：201811101 update
+- makeindex.py 生成mdwiki的链接页面
