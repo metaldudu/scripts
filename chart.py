@@ -3,7 +3,7 @@
 
 #monthcount = range(1,13)
 
-readlist = [12,16,14,8,10,7,14,14,10,10,5,64]
+readlist = [12,16,14,8,10,7,14,14,20,10,5,14]
 maxread = max(readlist)
 
 print(sum(readlist))

@@ -15,3 +15,5 @@
 - qdaily-56.py 爬取好奇心日报
 
 - makeindex.py 生成mdwiki的链接页面
+
+- txt2img.py 剪切板文字生成长图，用于微信
