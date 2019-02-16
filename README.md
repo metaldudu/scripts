@@ -6,7 +6,8 @@
 - xima.py 喜马拉雅电台抓取并下载（已失效）
 
 - dayofyear.py 显示今天是今年的第几天，进度条
-- doubanread.py 按月统计豆瓣已读书数量
+- douban.py 按月统计豆瓣已读书数量
+- doubanread.py 统计年度已读标记内容
 
 - txt2md.py 清理txt电子书文档
 - md2epub.py markdown转换epub
@@ -18,3 +19,5 @@
 - makeREADME.py 生成md文档目录的README.md
 
 - txt2img.py 剪切板文字生成长图，用于微信
+
+`20190216`
