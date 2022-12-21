@@ -17,3 +17,4 @@
 - dmzj.py 下载动漫之家的漫画，比较慢的方法
 - lsmovie.py 按拼音排序输出文件夹名称，对应ttm刮削文件夹 ver.20221106
 - pm.py 抓取 iqair.cn 空气质量和天气 ver.20221125
+- douban-echart.py 用 pyechart 显示豆瓣阅读数量柱状图 ver.20221221
